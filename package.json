@@ -1,0 +1,23 @@
+{
+  "name": "react_blog",
+  "version": "1.0.0",
+  "description": "React express App",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Swap76/React_Blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Swap76/React_Blog/issues"
+  },
+  "homepage": "https://github.com/Swap76/React_Blog#readme"
+}
