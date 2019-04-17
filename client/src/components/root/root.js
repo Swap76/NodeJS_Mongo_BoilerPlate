@@ -18,7 +18,7 @@ class Root extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div>
         <h2>This is Main Page</h2>
             <ul>
                 {this.state.message.map(message =>
