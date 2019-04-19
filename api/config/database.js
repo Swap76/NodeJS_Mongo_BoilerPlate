@@ -5,7 +5,12 @@ const initDatabase = () => {
 	
 	debug('Initializing database connection...');
 
-	mongoose.connect('mongodb://127.0.0.1:27017/api', { useNewUrlParser: true});
+	const db = 'mongodb+srv://Swapnil:vijaya26@cluster0-oslju.mongodb.net/test?retryWrites=true';
+
+	mongoose.connect(db, { useNewUrlParser: true})
+		.then(() => debug('MongoDB Connected....'))
+		.catch(err => debug(err));
+
 	const connection = mongoose.connection;
 
 	connection.once('open', () => {

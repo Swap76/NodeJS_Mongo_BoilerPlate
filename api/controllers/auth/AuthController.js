@@ -16,3 +16,13 @@ exports.test1 = async (req, res) => {
 	]
 	res.send(message);
 }
+
+exports.register = async (req, res) => {
+	
+	res.send("message");
+}
+
+exports.login = async (req, res) => {
+	
+	res.send("message");
+}
