@@ -1,12 +1,12 @@
 {
   "name": "react_blog",
   "version": "1.0.0",
-  "description": "React express App",
-  "main": "server.js",
+  "description": "React NodejS App",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "node app.js",
+    "server": "nodemon app.js",
     "client": "cd client && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
@@ -23,10 +23,16 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "boom": "^7.3.0",
+    "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
+    "csurf": "^1.9.0",
+    "debug": "^4.1.1",
     "express": "^4.16.4",
-    "fastify": "^2.2.0",
-    "fastify-swagger": "^2.3.2",
-    "mongoose": "^5.5.2"
+    "helmet": "^3.16.0",
+    "moment": "^2.24.0",
+    "mongoose": "^5.5.2",
+    "morgan": "^1.9.1"
   }
 }

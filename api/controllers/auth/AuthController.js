@@ -4,7 +4,7 @@ exports.test = async (req, res) => {
 		{id: 2, firstName:'Rahul', lastName:'Sawant-Desai'},
 		{id: 3, firstName:'Omkar', lastName:'Prabhu'},
 	]
-	return message;
+	res.send(message);
 }
 
 exports.test1 = async (req, res) => {
@@ -14,5 +14,5 @@ exports.test1 = async (req, res) => {
 		{id: 3, firstName:'Omkar', lastName:'Prabhu'},
 		{id: 4, firstName:'Shwetz', lastName:'Sies'},
 	]
-	return message;
+	res.send(message);
 }

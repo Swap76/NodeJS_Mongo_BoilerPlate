@@ -11,7 +11,7 @@ class Root extends Component {
     }
   
     componentDidMount() {
-      fetch('/api/1')
+      fetch('/auth/1')
         .then(res => res.json())
         .then(message => this.setState({message}, () => console.log(message)))
     }
