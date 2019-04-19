@@ -1,3 +1,6 @@
+const Joi = require('joi');
+const validator = require('validator');
+
 exports.test = async (req, res) => {
 	message = [
 		{id: 1, firstName:'Swapnil', lastName:'Shinde'},
@@ -18,6 +21,7 @@ exports.test1 = async (req, res) => {
 }
 
 exports.register = async (req, res) => {
+	const { username, email, password, password2} = req.body;
 	
 	res.send("message");
 }
