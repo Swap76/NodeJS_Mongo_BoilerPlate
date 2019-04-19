@@ -3,23 +3,22 @@ import './root.css';
 
 class Root extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-          message: []
-        }
+  constructor() {
+      super();
+      this.state = {
+        message: []
       }
-    
-      componentDidMount() {
-        fetch('/api')
-          .then(res => res.json())
-          .then(message => this.setState({message}, () => console.log(message)))
-      }
+    }
+  
+    componentDidMount() {
+      fetch('/api/1')
+        .then(res => res.json())
+        .then(message => this.setState({message}, () => console.log(message)))
+    }
 
   render() {
     return (
       <div>
-        <h2>This is Main Page</h2>
             <ul>
                 {this.state.message.map(message =>
                     <li key={message.id}>  {message.firstName} {message.lastName}</li>)}

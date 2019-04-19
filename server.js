@@ -1,30 +1,28 @@
-// Require the framework and instantiate it
-const fastify = require('fastify')({
-    logger: true
-  })
-  
-  // Declare a route
-  fastify.get('/', async (request, reply) => {
-    return { hello: 'world' }
-  })
-  
-  fastify.get('/api', async (req, res) => {
-    message = [
-        {id: 1, firstName:'Swapnil', lastName:'Shinde'},
-        {id: 2, firstName:'Rahul', lastName:'Sawant-Desai'},
-        {id: 3, firstName:'Omkar', lastName:'Prabhu'},
-    ]
-    return message;
-  })
+const mongoose = require('mongoose');
+const app = require('fastify')({ logger: true })
+const routes = require('./api/routes/test')
 
-  // Run the server!
-  const start = async () => {
-    try {
-      await fastify.listen(5000)
-      fastify.log.info(`server listening on ${fastify.server.address().port}`)
-    } catch (err) {
-      fastify.log.error(err)
-      process.exit(1)
-    }
+
+mongoose.connect('mongodb://127.0.0.1:27017/api', { useNewUrlParser: true});
+const connection = mongoose.connection;
+
+connection.once('open', () => {
+  console.log("MongoDB database connected successfully");
+})
+
+routes.forEach((route, index) => {
+  app.route(route)
+});
+
+// Run the server!
+const start = async () => {
+  try {
+    await app.listen(5000)
+    app.log.info(`server listening on ${app.server.address().port}`)
+  } catch (err) {
+    app.log.error(err)
+    process.exit(1)
   }
-  start()
+}
+
+start()

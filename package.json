@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/Swap76/React_Blog#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "boom": "^7.3.0",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "fastify": "^2.2.0",
     "fastify-swagger": "^2.3.2",
