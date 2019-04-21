@@ -1,7 +1,9 @@
 const Joi = require('joi');
+const debug = require('debug')('api:AuthController');
 const bcrypt = require('bcryptjs');
 const User = require('../../models/Users');
 const validator = require('validator');
+
 
 exports.test = async (req, res) => {
 	message = [
@@ -41,20 +43,20 @@ exports.register = async (req, res) => {
 
 	if (error){
 		req.flash('error', error.details[0].message);
-    	res.redirect('back');
+    	// res.redirect('back');
 	} else if (password != password2) {
 		req.flash('error', "Password doesn't match");
-    	res.redirect('back');
+    	// res.redirect('back');
 	} else if (validator.contains(username, ' ')) {
 		req.flash('error', '"username" should not contain blank space');
-		res.redirect('back');
+		// res.redirect('back');
 	} else {
 		// If validation Passed
 		User.findOne({ email: email})
 			.then(user => {
 				if(user) {
 					req.flash('error', "Email id already registered");
-    				res.redirect('back');
+    				// res.redirect('back');
 				} else {
 					const newUser = new User({
 						username,
@@ -67,7 +69,7 @@ exports.register = async (req, res) => {
 						bcrypt.hash(newUser.password, salt, (err, hash) => {
 							if(err) {
 								req.flash('error', "Bcrypt Error");
-    							res.redirect('back');
+    							// res.redirect('back');
 							} else {
 								// Set password to hashed
 								newUser.password = hash;
@@ -88,6 +90,44 @@ exports.register = async (req, res) => {
 }
 
 exports.login = async (req, res) => {
-	
-	res.send("Login");
+	const data = {
+		email: req.body.email,
+		password: req.body.password,
+	  };
+	  const check = {
+		email: Joi.string().email().required().trim(),
+		password: Joi.string().required().min(8).max(32)
+	  };
+	  const { error } = Joi.validate(data, check);
+	  if (error) {
+		req.flash('error', error.details[0].message);
+		// res.redirect('back');
+	  }
+	  else {
+		User.findOne({ email: req.body.email}, (err, user) => {
+			if (err) {
+			  debug(err);
+			  req.flash('error', 'Some error from mongodb. Try again');
+			  // res.redirect('back');
+			} else if (user) {
+			  bcrypt.compare(req.body.password, user.password, (err, match) => {
+				if (err) {
+				  debug(err);
+				  req.flash('error', 'Some error from bcrypt. Try again');
+				  //res.redirect('back');
+				} else if (match) {
+					
+				} else {
+				  req.flash('error', 'Incorrect Password');
+				  console.log('Incorrect Password');
+				  // res.redirect('back');
+				}
+			  });
+			} else {
+			  req.flash('error', 'Incorrect email address');
+			  console.log('Incorrect email address');
+			  // res.redirect('back');
+			}
+		  });
+	  }
 }

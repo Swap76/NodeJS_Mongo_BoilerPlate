@@ -1,6 +1,7 @@
 const express = require('express');
 const moment = require('moment');
 const debug = require('debug')('api:app');
+require('dotenv').config(); // Load .env
 const initRoutes = require('./api/routes/index')
 const initDatabase = require('./api/config/database');
 const initMiddleware = require('./api/config/middleware')
