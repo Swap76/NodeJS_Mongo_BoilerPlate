@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const bcrypt = require('bcryptjs');
 const User = require('../../models/Users');
 const validator = require('validator');
 
@@ -41,11 +42,45 @@ exports.register = async (req, res) => {
 	if (error){
 		req.flash('error', error.details[0].message);
     	res.redirect('back');
-	} else if (user.password == user.password2) {
+	} else if (password != password2) {
 		req.flash('error', "Password doesn't match");
     	res.redirect('back');
+	} else if (validator.contains(username, ' ')) {
+		req.flash('error', '"username" should not contain blank space');
+		res.redirect('back');
 	} else {
-
+		// If validation Passed
+		User.findOne({ email: email})
+			.then(user => {
+				if(user) {
+					req.flash('error', "Email id already registered");
+    				res.redirect('back');
+				} else {
+					const newUser = new User({
+						username,
+						email,
+						password
+					});
+					
+					// Hash Password
+					bcrypt.genSalt(10, (err, salt) => 
+						bcrypt.hash(newUser.password, salt, (err, hash) => {
+							if(err) {
+								req.flash('error', "Bcrypt Error");
+    							res.redirect('back');
+							} else {
+								// Set password to hashed
+								newUser.password = hash;
+								// Save user
+								newUser.save()
+									.then(user => {
+										res.redirect('/login');
+									})
+									.catch(err => console.log(err));
+							}
+					}))
+				}
+			});
 	}
 	res.send("message");
 }

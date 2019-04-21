@@ -7,7 +7,7 @@ const initDatabase = () => {
 
 	const db = 'mongodb+srv://Swapnil:vijaya26@cluster0-oslju.mongodb.net/test?retryWrites=true';
 
-	mongoose.connect(db, { useNewUrlParser: true})
+	mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true})
 		.then(() => debug('MongoDB Connected....'))
 		.catch(err => debug(err));
 
