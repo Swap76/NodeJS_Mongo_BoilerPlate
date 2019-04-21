@@ -4,17 +4,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../../models/Users');
 const validator = require('validator');
 
-
-exports.test = async (req, res) => {
-	message = [
-		{id: 1, firstName:'Swapnil', lastName:'Shinde'},
-		{id: 2, firstName:'Rahul', lastName:'Sawant-Desai'},
-		{id: 3, firstName:'Omkar', lastName:'Prabhu'},
-	]
-	res.send(message);
-}
-
-exports.test1 = async (req, res) => {
+module.exports.test1 = async (req, res) => {
 	message = [
 		{id: 1, firstName:'Swapnil', lastName:'Shinde'},
 		{id: 2, firstName:'Rahul', lastName:'Sawant-Desai'},
@@ -89,7 +79,7 @@ exports.register = async (req, res) => {
 	}
 }
 
-exports.login = async (req, res) => {
+module.exports.login = async (req, res) => {
 	const data = {
 		email: req.body.email,
 		password: req.body.password,
@@ -116,7 +106,10 @@ exports.login = async (req, res) => {
 				  req.flash('error', 'Some error from bcrypt. Try again');
 				  //res.redirect('back');
 				} else if (match) {
-					
+					req.session.loggedIn = true;
+					req.session.user = user;
+					console.log(user);
+					res.redirect('/auth/1');
 				} else {
 				  req.flash('error', 'Incorrect Password');
 				  console.log('Incorrect Password');
@@ -131,3 +124,25 @@ exports.login = async (req, res) => {
 		  });
 	  }
 }
+
+module.exports.logout = (req, res, next) => {
+  if (req.session.user != null) {
+    req.session.user = null;
+    req.session.loggedIn = false;
+    req.flash('warning', 'Thanks for visiting. See you soon');
+  }
+  res.redirect('/auth/login');
+};
+
+module.exports.checkUser = (req, res, next) => {
+  if (req.session.user && req.session.user._id) {
+    next();
+  } else {
+		req.flash('error', 'You must log in to continue');
+		res.redirect('/auth/login');
+  }
+};
+
+module.exports.loginView= (req, res, next) => {
+  res.send('Login')
+};
