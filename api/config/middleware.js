@@ -39,9 +39,30 @@ const initMiddleware = (app) => {
 
     // Connect flash
     app.use(flash());
+    
+	// Express Sessions
+    const store = new MongoDBStore({
+            uri: process.env.MONGODB_URL,
+            collection: 'sessions',
+        }, ((err) => {
+            if (err) {
+                debug('Unable to connect to Session Store');
+            }
+        }
+    ));
+
+	// Configuring Session Options 
+    app.use(session({
+        secret: '2BB80D537B1DA3E38BD30361AA855686BDE0EACD7162FEF6A25FE97BF527A25B',
+        resave: true,
+        saveUninitialized: true,
+        cookie: { maxAge: 86400000 },
+        store,
+    }));
 
     // Global Vars
     app.use(function(req, res, next) {
+        res.locals.session = req.session;
         res.locals.success_msg = req.flash('success_msg');
         res.locals.error_msg = req.flash('error_msg');
         res.locals.error = req.flash('error');
