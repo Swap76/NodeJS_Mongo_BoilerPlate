@@ -74,7 +74,10 @@ exports.register = async (req, res) => {
 								// Save user
 								newUser.save()
 									.then(user => {
-										res.redirect('/login');
+										console.log(user);
+										req.flash('success_msg','You are now registered');
+										console.log('You are now registered');
+										res.redirect('/auth/login');
 									})
 									.catch(err => console.log(err));
 							}
@@ -82,10 +85,9 @@ exports.register = async (req, res) => {
 				}
 			});
 	}
-	res.send("message");
 }
 
 exports.login = async (req, res) => {
 	
-	res.send("message");
+	res.send("Login");
 }

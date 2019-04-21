@@ -24,6 +24,7 @@ const initMiddleware = (app) => {
 
     app.use(compression());
 
+    // Express Session
     app.use(
         session({
           secret: 'swapnil',
@@ -32,11 +33,14 @@ const initMiddleware = (app) => {
         })
     );
     
+    // Initialize Passport
     app.use(passport.initialize());
     app.use(passport.session());
 
+    // Connect flash
     app.use(flash());
 
+    // Global Vars
     app.use(function(req, res, next) {
         res.locals.success_msg = req.flash('success_msg');
         res.locals.error_msg = req.flash('error_msg');
