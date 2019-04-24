@@ -22,7 +22,6 @@ exports.register = async (req, res) => {
 		password,
 		password2
 	};
-
 	const check = {
 		username: Joi.string().min(4).max(32).required().trim(),
 		email: Joi.string().email().min(8).max(64).required().trim(),
@@ -30,7 +29,6 @@ exports.register = async (req, res) => {
 		password2: Joi.string().required().min(8).max(32)
 	};
 	const { error } = Joi.validate(user, check);
-
 	if (error){
 		req.flash('error', error.details[0].message);
     	// res.redirect('back');
