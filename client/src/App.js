@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Root from './components/root/root'
+import Blog from './components/blogs/blogs';
+import Login from './components/login/login';
 
 class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>This is Main Page</h2>
+      <div>
+        <header>
+          <h2 >This is Main Page</h2>
         </header>
-        <Root/>
+        <Login/>
+        <Blog/>
       </div>
     );
   }

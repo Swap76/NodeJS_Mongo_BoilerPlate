@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './root.css';
+import './blogs.css';
 
 class Root extends Component {
 
@@ -11,7 +11,7 @@ class Root extends Component {
     }
   
     componentDidMount() {
-      fetch('/auth/1')
+      fetch('/blog/')
         .then(res => res.json())
         .then(message => this.setState({message}, () => console.log(message)))
     }
@@ -21,7 +21,7 @@ class Root extends Component {
       <div>
             <ul>
                 {this.state.message.map(message =>
-                    <li key={message.id}>  {message.firstName} {message.lastName}</li>)}
+                    <li key={message._id}>  {message.title} </li>)}
             </ul>
       </div>
     );
