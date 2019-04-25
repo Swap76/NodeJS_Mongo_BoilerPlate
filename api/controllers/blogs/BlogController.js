@@ -3,26 +3,42 @@ const debug = require('debug')('api:BlogController');
 const Blog = require('../../models/Blogs');
 const validator = require('validator');
 
+/**
+ * Shows all blog posts of all users
+ * @route /blog/
+ * @method GET
+ */
 module.exports.all = async (req, res, next) => {
-	res.send("All Blogs");
+	Blog.find().populate('userId').exec((err, post) => {
+		if (post) {
+			res.send(post);
+		} else {
+			var err = new Error('No blog posts')
+			next(err);
+		}
+	});
 };
 
+/**
+ * Shows all blog posts of signed in user
+ * @route /blog/dashboard
+ * @method GET
+ */
 module.exports.dashboard = async (req, res, next) => {
-	res.send("Dashboard");
-};
-
-module.exports.createView = async (req, res, next) => {
-	res.send("CreateView");
-};
-
-module.exports.editView = async (req, res, next) => {
-	res.send("EditView");
+	Blog.find({ userId: req.session.user._id }).exec((err, post) => {
+		if (post) {
+			res.send(post);
+		} else {
+			var err = new Error('No blog posts')
+			next(err);
+		}
+	});
 };
 
 /**
  * Creates a new blog post
- * @route /blog/
- * @body title, body, tags
+ * @route /blog/create
+ * @body title, body
  * @method POST
  */
 module.exports.create = async (req, res, next) => {
@@ -83,7 +99,7 @@ module.exports.show = async (req, res, next) => {
 
 /**
  * Updates a blog post with new content
- * @route /blog/:id/
+ * @route /blog/:id
  * @param id blog post id
  * @method POST
  */

@@ -14,6 +14,12 @@ module.exports.test1 = async (req, res) => {
 	res.send(message);
 }
 
+/**
+ * Sign up a new user with given form details
+ * @route /auth/register
+ * @body name, email, username, password
+ * @method POST
+ */
 exports.register = async (req, res) => {
 	const { username, email, password, password2} = req.body;
 	const user = {
@@ -77,6 +83,12 @@ exports.register = async (req, res) => {
 	}
 }
 
+/**
+ * Logs in the existing user
+ * @route /auth/login
+ * @body email, password
+ * @method POST
+ */
 module.exports.login = async (req, res) => {
 	const data = {
 		email: req.body.email,
@@ -123,15 +135,25 @@ module.exports.login = async (req, res) => {
 	  }
 }
 
+/**
+ * Logs out the currently logged in user
+ * @route /auth/logout
+ * @param none
+ * @method GET
+ */
 module.exports.logout = (req, res, next) => {
   if (req.session.user != null) {
     req.session.user = null;
     req.session.loggedIn = false;
     req.flash('warning', 'Thanks for visiting. See you soon');
-  }
-  res.redirect('/auth/login');
+	}
+	res.send('Logged out');
+  // res.redirect('/auth/login');
 };
 
+/**
+ *  Middleware for checking if user is logged in or not
+ */
 module.exports.checkUser = (req, res, next) => {
   if (req.session.user && req.session.user._id) {
     next();
@@ -139,8 +161,4 @@ module.exports.checkUser = (req, res, next) => {
 		req.flash('error', 'You must log in to continue');
 		res.redirect('/auth/login');
   }
-};
-
-module.exports.loginView= (req, res, next) => {
-  res.send('Login')
 };

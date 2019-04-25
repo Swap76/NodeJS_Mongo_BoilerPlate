@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const logger = require('morgan');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser')
+const cors = require('cors');
 const csrf = require('csurf');
 
 const initMiddleware = (app) => {
@@ -19,6 +20,8 @@ const initMiddleware = (app) => {
 	app.use(cookieParser())
 
 	app.use(helmet());
+
+	app.use(cors());
 
 	app.use(logger('dev'));
 

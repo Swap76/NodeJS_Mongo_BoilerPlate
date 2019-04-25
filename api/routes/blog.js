@@ -9,12 +9,6 @@ router.get('/', blogController.all);
 
 router.get('/dashboard', authController.checkUser, blogController.dashboard);
 
-router.get('/create', authController.checkUser, blogController.createView);
-
-router.get('/:id/edit', authController.checkUser, blogController.checkBlogOwner, blogController.editView);
-
-// CRUD 
-
 router.post('/create', authController.checkUser, blogController.create);
 
 router.get('/:id', blogController.show);
