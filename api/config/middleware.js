@@ -1,7 +1,6 @@
 const helmet = require('helmet');
 const session = require('express-session');
 const passport = require('passport');
-const flash = require('connect-flash');
 const compression = require('compression')
 const debug = require('debug')('api:middleware')
 const bodyParser = require('body-parser')
@@ -32,9 +31,6 @@ const initMiddleware = (app) => {
 	// Initialize Passport
 	app.use(passport.initialize());
 	app.use(passport.session());
-
-	// Connect flash
-	app.use(flash());
 	
 // Express Sessions
 	const store = new MongoDBStore({
@@ -59,9 +55,6 @@ const initMiddleware = (app) => {
 	// Global Vars
 	app.use(function(req, res, next) {
 		res.locals.session = req.session;
-		res.locals.success_msg = req.flash('success_msg');
-		res.locals.error_msg = req.flash('error_msg');
-		res.locals.error = req.flash('error');
 		next();
 	});
 

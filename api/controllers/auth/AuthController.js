@@ -11,7 +11,7 @@ module.exports.test1 = async (req, res) => {
 		{id: 3, firstName:'Omkar', lastName:'Prabhu'},
 		{id: 4, firstName:'Shwetz', lastName:'Sies'},
 	]
-	res.send(message);
+	res.status(200).send(message);
 }
 
 /**
@@ -36,21 +36,17 @@ exports.register = async (req, res) => {
 	};
 	const { error } = Joi.validate(user, check);
 	if (error){
-		req.flash('error', error.details[0].message);
-    	// res.redirect('back');
+		res.status(400).send({'error':error.details[0].message});  	
 	} else if (password != password2) {
-		req.flash('error', "Password doesn't match");
-    	// res.redirect('back');
+		res.status(400).send({'error':'Password doesn\'t match'});    	
 	} else if (validator.contains(username, ' ')) {
-		req.flash('error', '"username" should not contain blank space');
-		// res.redirect('back');
+		res.status(400).send({'error':'"username" should not contain blank space'});   	 
 	} else {
 		// If validation Passed
 		User.findOne({ email: email})
 			.then(user => {
 				if(user) {
-					req.flash('error', "Email id already registered");
-    				// res.redirect('back');
+    			res.status(400).send({'error':'Email id already registered'});   
 				} else {
 					const newUser = new User({
 						username,
@@ -62,8 +58,7 @@ exports.register = async (req, res) => {
 					bcrypt.genSalt(10, (err, salt) => 
 						bcrypt.hash(newUser.password, salt, (err, hash) => {
 							if(err) {
-								req.flash('error', "Bcrypt Error");
-    							// res.redirect('back');
+    						res.status(400).send({'error':'Bcrypt Error'});
 							} else {
 								// Set password to hashed
 								newUser.password = hash;
@@ -71,9 +66,7 @@ exports.register = async (req, res) => {
 								newUser.save()
 									.then(user => {
 										console.log(user);
-										req.flash('success_msg','You are now registered');
-										console.log('You are now registered');
-										res.redirect('/auth/login');
+										res.status(400).send('You are now registered');
 									})
 									.catch(err => console.log(err));
 							}
@@ -100,36 +93,30 @@ module.exports.login = async (req, res) => {
 	  };
 	  const { error } = Joi.validate(data, check);
 	  if (error) {
-		req.flash('error', error.details[0].message);
-		// res.redirect('back');
+			res.status(400).send({'error':error.details[0].message});	 
 	  }
 	  else {
 		User.findOne({ email: req.body.email}, (err, user) => {
 			if (err) {
 			  debug(err);
-			  req.flash('error', 'Some error from mongodb. Try again');
-			  // res.redirect('back');
+				res.status(400).send({'error':'Some error from mongodb. Try again'});  
 			} else if (user) {
 			  bcrypt.compare(req.body.password, user.password, (err, match) => {
 				if (err) {
 				  debug(err);
-				  req.flash('error', 'Some error from bcrypt. Try again');
-				  //res.redirect('back');
+					res.status(400).send({'error':'Some error from bcrypt. Try again'});  
 				} else if (match) {
 					req.session.loggedIn = true;
 					req.session.user = user;
 					console.log(user);
-					res.redirect('/auth/1');
+					res.status(200).send('Logged in.');
 				} else {
-				  req.flash('error', 'Incorrect Password');
-				  console.log('Incorrect Password');
-				  // res.redirect('back');
+					res.status(400).send({'error':'Incorrect Password'});  
 				}
 			  });
 			} else {
-			  req.flash('error', 'Incorrect email address');
-			  console.log('Incorrect email address');
-			  // res.redirect('back');
+				res.status(400).send({'error':'Incorrect email address'});
+			  console.log('Incorrect email address');			   
 			}
 		  });
 	  }
@@ -145,10 +132,9 @@ module.exports.logout = (req, res, next) => {
   if (req.session.user != null) {
     req.session.user = null;
     req.session.loggedIn = false;
-    req.flash('warning', 'Thanks for visiting. See you soon');
+		res.status(200).send('Thanks for visiting. See you soon')
 	}
-	res.send('Logged out');
-  // res.redirect('/auth/login');
+	res.status(200).send('Logged out');
 };
 
 /**
@@ -158,7 +144,7 @@ module.exports.checkUser = (req, res, next) => {
   if (req.session.user && req.session.user._id) {
     next();
   } else {
-		req.flash('error', 'You must log in to continue');
-		res.redirect('/auth/login');
+		res.status(400).send('Login first');
+		// res.redirect('/auth/login');
   }
 };
