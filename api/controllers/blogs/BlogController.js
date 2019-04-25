@@ -115,7 +115,7 @@ module.exports.edit = async (req, res, next) => {
 		const { error } = Joi.validate(data, check);
 		if (error) {
 			res.status(400).send({'error':error.details[0].message});
-		} else if (result.userId.toString() === req.session.user._id.toString()) {
+		} else {
 			Blog.findByIdAndUpdate(id, { $set: req.body }, (err, result) => {
 				if (err) {
 					res.status(400).send({'error':'Some error. Try again'});

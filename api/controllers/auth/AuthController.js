@@ -132,9 +132,10 @@ module.exports.logout = (req, res, next) => {
   if (req.session.user != null) {
     req.session.user = null;
     req.session.loggedIn = false;
-		res.status(200).send('Thanks for visiting. See you soon')
+		res.status(200).send('Logged out');
+	} else {
+		res.status(400).send({'error':'Some error in logout try again'});
 	}
-	res.status(200).send('Logged out');
 };
 
 /**
