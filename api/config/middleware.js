@@ -58,7 +58,7 @@ const initMiddleware = (app) => {
 		next();
 	});
 
-	// // CSRF Protection
+	// // CSRF Protection Can be unabled when front end is able to pass csrf tokens
 	// app.use(csrf({ cookie: true }));
 	// app.use((err, req, res, next) => {
 	// 	if (err.code === 'EBADCSRFTOKEN') {

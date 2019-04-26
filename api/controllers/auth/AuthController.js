@@ -4,16 +4,6 @@ const bcrypt = require('bcryptjs');
 const User = require('../../models/Users');
 const validator = require('validator');
 
-module.exports.test1 = async (req, res) => {
-	message = [
-		{id: 1, firstName:'Swapnil', lastName:'Shinde'},
-		{id: 2, firstName:'Rahul', lastName:'Sawant-Desai'},
-		{id: 3, firstName:'Omkar', lastName:'Prabhu'},
-		{id: 4, firstName:'Shwetz', lastName:'Sies'},
-	]
-	res.status(200).send(message);
-}
-
 /**
  * Sign up a new user with given form details
  * @route /auth/register
@@ -53,7 +43,6 @@ exports.register = async (req, res) => {
 						email,
 						password
 					});
-					
 					// Hash Password
 					bcrypt.genSalt(10, (err, salt) => 
 						bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -146,6 +135,5 @@ module.exports.checkUser = (req, res, next) => {
     next();
   } else {
 		res.status(400).send('Login first');
-		// res.redirect('/auth/login');
   }
 };
