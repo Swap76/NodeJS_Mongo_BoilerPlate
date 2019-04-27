@@ -94,7 +94,7 @@ module.exports.show = async (req, res, next) => {
 
 /**
  * Updates a blog post with new content
- * @route /blog/:id
+ * @route /blog/:id/edit
  * @param id blog post id
  * @method POST
  */
