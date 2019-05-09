@@ -32,7 +32,7 @@ const initMiddleware = (app) => {
 	app.use(passport.initialize());
 	app.use(passport.session());
 	
-// Express Sessions
+// MongoDB Sessions
 	const store = new MongoDBStore({
 			uri: process.env.MONGODB_URL,
 			collection: 'sessions',
