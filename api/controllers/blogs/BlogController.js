@@ -10,11 +10,13 @@ const validator = require('validator');
  */
 module.exports.all = async (req, res, next) => {
 	Blog.find().populate('userId').exec((err, post) => {
-		if (post) {
+		if (err) {
+			debug(err);
+			res.status(400).send({'error':'Some error. Try again'});
+		} else if (post) {
 			res.status(200).send(post);
 		} else {
-			var err = new Error('No blog posts')
-			next(err);
+			res.status(400).send({'error':'There are no blogs'});
 		}
 	});
 };
@@ -26,11 +28,13 @@ module.exports.all = async (req, res, next) => {
  */
 module.exports.dashboard = async (req, res, next) => {
 	Blog.find({ userId: req.session.user._id }).exec((err, post) => {
-		if (post) {
+		if (err) {
+			debug(err);
+			res.status(400).send({'error':'Some error. Try again'});
+		} else if (post) {
 			res.status(200).send(post);
 		} else {
-			var err = new Error('No blog posts')
-			next(err);
+			res.status(400).send({'error':'There are no blogs'});
 		}
 	});
 };
@@ -60,9 +64,9 @@ module.exports.create = async (req, res, next) => {
 		newBlog.save((err, result) => {
 			if (err) {
 				debug(err);
-			res.status(400).send({'error':'Some error. Try again'});
+				res.status(400).send({'error':'Some error. Try again'});
 			} else if (result) {
-				res.status(200).send("Post added successfully");
+				res.status(201).send("Post added successfully");
 				console.log(result);
 			}
 		});
@@ -78,15 +82,16 @@ module.exports.create = async (req, res, next) => {
 module.exports.show = async (req, res, next) => {
 	const id = req.params.id;
   if (!validator.isMongoId(id)) {
-    var err = new Error('There is no such blog post')
-    next(err);
+    res.status(400).send({'error':'There is no such blog post'});
   } else {
 		Blog.findById(id).populate('userId').exec((err, post) => {
-      if (post) {
+      if (err) {
+				debug(err);
+				res.status(400).send({'error':'Some error. Try again'});
+			} else if (post) {
         res.status(200).send(post);
       } else {
-        var err = new Error('There is no such blog post')
-        next(err);
+        res.status(400).send({'error':'There is no such blog post'});
       }
     });
 	}
@@ -101,8 +106,7 @@ module.exports.show = async (req, res, next) => {
 module.exports.edit = async (req, res, next) => {
 	const id = req.params.id;
   if (!validator.isMongoId(id)) {
-    var err = new Error('There is no such blog post')
-    next(err);
+    res.status(400).send({'error':'There is no such blog post'});
   } else{
 		const data = {
 			title: req.body.title,
@@ -118,10 +122,13 @@ module.exports.edit = async (req, res, next) => {
 		} else {
 			Blog.findByIdAndUpdate(id, { $set: req.body }, (err, result) => {
 				if (err) {
+					debug(err);
 					res.status(400).send({'error':'Some error. Try again'});
 				} else if (result) {
 					console.log(result);
-					res.status(200).send("Post updated successfully");
+					res.status(202).send("Post updated successfully");
+				} else {
+					res.status(400).send({'error':'There is no such blog post'});
 				}
 			});
 		}
@@ -137,15 +144,18 @@ module.exports.edit = async (req, res, next) => {
 module.exports.delete = async (req, res, next) => {
 	const id = req.params.id;
   if (!validator.isMongoId(id)) {
-    var err = new Error('There is no such blog post')
-    next(err);
+    res.status(400).send({'error':'There is no such blog post'});
   } else {
-    Blog.findOneAndDelete(id, (err, result) => {
+    Blog.findByIdAndDelete(id, (err, result) => {
+			console.log(id);
       if (err) {
-        next(err);
+				debug(err);
+        res.status(400).send({'error':'Some error. Try again'});
       } else if (result) {
-				res.status(200).send("Post deleted successfully");
-      }
+				res.status(202).send("Post deleted successfully");
+      } else {
+				res.status(400).send({'error':'There is no such blog post'});
+			}
     });
   }
 };
@@ -156,19 +166,21 @@ module.exports.delete = async (req, res, next) => {
 module.exports.checkBlogOwner = (req, res, next) => {
   const id = req.params.id;
   if (!validator.isMongoId(id)) {
-    var err = new Error('There is no such blog post')
-    next(err);
+    res.status(400).send({'error':'There is no such blog post'});
   } else {
     Blog.findById(id).exec((err, post) => {
       if (post) {
         if (post.userId.toString() === req.session.user._id.toString()) {
           next();
         } else {
-					res.status(400).send({'error':'You are not owner of this post'});
+					res.status(403).send({'error':'You are not owner of this post'});
         }
       } else if (err) {
+				debug(err);
 				res.status(400).send({'error':'Some error. Try again'});
-      }
+      } else {
+				res.status(400).send({'error':'There is no such blog post'});
+			}
     });
   }
 };

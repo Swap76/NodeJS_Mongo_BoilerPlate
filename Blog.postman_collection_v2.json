@@ -1,0 +1,146 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Blog",
+		"_postman_id": "81b7ecea-9df9-a1ac-1131-67597423bd5f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"url": "http://localhost:5000/auth/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"swsadpl\",\n\t\"email\":\"swapniasdshi2000@gmail.com\",\n\t\"password\":\"123456789\",\n\t\"password2\":\"123456789\"\n\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"url": "http://localhost:5000/auth/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"swapniasdshi2000@gmail.com\",\n\t\"password\":\"123456789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"url": "http://localhost:5000/auth/logout",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create blog",
+			"request": {
+				"url": "http://localhost:5000/blog/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\":\"Swapnil\",\n\t\"content\":\"This is First Post\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Show one blog",
+			"request": {
+				"url": "http://localhost:5000/blog/5cc039a26ca49c21bbaad374",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Edit blog",
+			"request": {
+				"url": "http://localhost:5000/blog/5cc039a26ca49c21bbaad374/edit",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\":\"Swapnil Updated\",\n\t\"content\":\"This is First Post Updated\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete blog",
+			"request": {
+				"url": "http://localhost:5000/blog/5cc039a26ca49c21bbaad374/delete",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "All blogs",
+			"request": {
+				"url": "http://localhost:5000/blog/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Dashboard",
+			"request": {
+				"url": "http://localhost:5000/blog/dashboard",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
