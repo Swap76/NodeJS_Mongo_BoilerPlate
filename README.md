@@ -18,6 +18,10 @@ In this project joi is used for validation and for encrypting the password bcryp
   ```
   npm start
   ```
+### Testing
+
+Import the file Blog.postman_collection_v2.json into postman for testing API endpoints.
+
   
 ## Developers
 
