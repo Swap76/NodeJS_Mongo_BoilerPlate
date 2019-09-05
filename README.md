@@ -1,5 +1,5 @@
-# React_Blog
-CRUD Blog using React, NodeJS, Experss  
+# NodeJS_Blog_RestAPI
+CRUD Blog using NodeJS, Experss, MongoDB
 
 This project uses MongoDB Atlas as database .Connecting to it is pretty simple , make sure you have .env file along with a proper net connection .
 
