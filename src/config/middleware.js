@@ -8,7 +8,6 @@ const logger = require('morgan');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser')
 const cors = require('cors');
-const csrf = require('csurf');
 
 const initMiddleware = (app) => {
 
@@ -57,21 +56,6 @@ const initMiddleware = (app) => {
 		res.locals.session = req.session;
 		next();
 	});
-
-	// CSRF Protection Can be unabled when front end is able to pass csrf tokens
-	// app.use(csrf({ cookie: true }));
-	// app.use((err, req, res, next) => {
-	// 	if (err.code === 'EBADCSRFTOKEN') {
-	// 	const nErr = new Error('Something went wrong. Try again');
-	// 	next(nErr);
-	// 	}
-	// });
-
-	// app.use((req, res, next) => {
-	// 	res.locals.token = req.csrfToken();
-	// 	next();
-	// });
-
 	
 	debug('Finished initializing middlewares...');
 };
