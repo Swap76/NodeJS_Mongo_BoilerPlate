@@ -3,17 +3,13 @@ CRUD API using NodeJS, Experss, MongoDB
 
 ## About
 
-This Repo is for beginners of NodeJS who wants to make a full API service. This repo will be showing the cleaner way of coding. Folder Structure to follow etc.
+This Repo is for beginners of NodeJS who wants to make a full API service. This repo has a good folder structure. Joi for validation of incoming data. Passport for encrypting passwords.  
 
 ### Prerequisites
 
 Following are the softwares requried to get this api up and running.
 * [Node.js](https://nodejs.org) - Chrome's V8 Javascript Engine
 * [MongoDB](https://mongodb.org) - NoSQL Database
-
-This project uses MongoDB Atlas as database .Connecting to it is pretty simple , make sure you have .env file along with a proper net connection .
-
-In this project joi is used for validation and for encrypting the password bcryptjs is used along with validator to check the id coming from incoming request.
 
 ### Installing
 
