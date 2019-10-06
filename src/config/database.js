@@ -1,3 +1,4 @@
+'use strict';
 const debug = require('debug')('api:database');
 const mongoose = require('mongoose');
 

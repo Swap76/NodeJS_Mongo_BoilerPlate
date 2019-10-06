@@ -1,3 +1,5 @@
+'use strict';
+
 const Joi = require('joi');
 const debug = require('debug')('api:AuthController');
 const bcrypt = require('bcryptjs');
@@ -70,11 +72,10 @@ exports.register = async (req, res) => {
               // Save user
               newUser
                 .save()
-                .then(user => {
-                  console.log(user);
+                .then(() => {
                   res.status(400).send('You are now registered');
                 })
-                .catch(err => console.log(err));
+                .catch(err => debug(err));
             }
           })
         );
@@ -122,7 +123,6 @@ module.exports.login = async (req, res) => {
           } else if (match) {
             req.session.loggedIn = true;
             req.session.user = user;
-            console.log(user);
             res.status(200).send('Logged in.');
           } else {
             res.status(400).send({ error: 'Incorrect Password' });
@@ -130,7 +130,6 @@ module.exports.login = async (req, res) => {
         });
       } else {
         res.status(400).send({ error: 'Incorrect email address' });
-        console.log('Incorrect email address');
       }
     });
   }

@@ -1,3 +1,4 @@
+'use strict';
 const debug = require('debug')('api:routes');
 const authRoutes = require('./auth');
 const blogRoutes = require('./blog');

@@ -1,3 +1,5 @@
+'use strict';
+
 const Joi = require('joi');
 const debug = require('debug')('api:BlogController');
 const Blog = require('../../models/Blogs');
@@ -9,16 +11,16 @@ const validator = require('validator');
  * @method GET
  */
 module.exports.all = async (req, res) => {
-  Blog.find().populate('userId').exec((err, post) => {
-    if (err) {
-      debug(err);
-      res.status(400).send({'error':'Some error. Try again'});
-    } else if (post) {
-      res.status(200).send(post);
-    } else {
-      res.status(400).send({'error':'There are no blogs'});
+  try {
+    const result = await Blog.find().populate('userId');
+    if(result.length > 0) {
+      return res.status(200).send(result);
     }
-  });
+    return res.status(400).send({'error':'There are no blogs'});
+  } catch (err) {
+    debug(err);
+    return res.status(400).send({'error':'Some error. Try again'});
+  }
 };
 
 /**
@@ -27,16 +29,16 @@ module.exports.all = async (req, res) => {
  * @method GET
  */
 module.exports.dashboard = async (req, res) => {
-  Blog.find({ userId: req.session.user._id }).exec((err, post) => {
-    if (err) {
-      debug(err);
-      res.status(400).send({'error':'Some error. Try again'});
-    } else if (post) {
-      res.status(200).send(post);
-    } else {
-      res.status(400).send({'error':'There are no blogs'});
+  try {
+    const result = await Blog.find({ userId: req.session.user._id });
+    if(result > 0) {
+      res.status(200).send(result);
     }
-  });
+    return res.status(400).send({'error':'There are no blogs'}); 
+  } catch (err) {
+    debug(err);
+    res.status(400).send({'error':'Some error. Try again'});
+  }
 };
 
 /**
@@ -61,15 +63,17 @@ module.exports.create = async (req, res) => {
   } else {
     req.body.userId = req.session.user._id;
     const newBlog = new Blog(req.body);
-    newBlog.save((err, result) => {
-      if (err) {
-        debug(err);
-        res.status(400).send({'error':'Some error. Try again'});
-      } else if (result) {
-        res.status(201).send('Post added successfully');
-        console.log(result);
+		
+    try {
+      const result = await newBlog.save();
+      if (result) {
+        return res.status(201).send('Post added successfully');
       }
-    });
+      return res.status(400).send({'error':'Failed to create new post. Try again'});
+    } catch (err) {
+      debug(err);
+      return res.status(400).send({'error':'Some error. Try again'});
+    }
   }
 };
 
@@ -79,21 +83,21 @@ module.exports.create = async (req, res) => {
  * @param id blog post id
  * @method GET
  */
-module.exports.show = async (req, res) => {
+module.exports.show = async (req, res, ) => {
   const id = req.params.id;
   if (!validator.isMongoId(id)) {
     res.status(400).send({'error':'There is no such blog post'});
   } else {
-    Blog.findById(id).populate('userId').exec((err, post) => {
-      if (err) {
-        debug(err);
-        res.status(400).send({'error':'Some error. Try again'});
-      } else if (post) {
-        res.status(200).send(post);
-      } else {
-        res.status(400).send({'error':'There is no such blog post'});
+    try {
+      const result = await Blog.findById(id).populate('userId');
+      if (result) {
+        return res.status(200).send(result);
       }
-    });
+      return res.status(400).send({'error':'There is no such blog post'});
+    } catch(err) {
+      debug(err);
+      res.status(400).send({'error':'Some error. Try again'});
+    }
   }
 };
 
@@ -120,17 +124,16 @@ module.exports.edit = async (req, res) => {
     if (error) {
       res.status(400).send({'error':error.details[0].message});
     } else {
-      Blog.findByIdAndUpdate(id, { $set: req.body }, (err, result) => {
-        if (err) {
-          debug(err);
-          res.status(400).send({'error':'Some error. Try again'});
-        } else if (result) {
-          console.log(result);
-          res.status(202).send('Post updated successfully');
-        } else {
-          res.status(400).send({'error':'There is no such blog post'});
+      try {
+        const result = await Blog.findByIdAndUpdate(id, { $set: req.body });
+        if(result) {
+          return res.status(202).send('Post updated successfully');
         }
-      });
+        return res.status(400).send({'error':'There is no such blog post'});
+      } catch(err) {
+        debug(err);
+        return res.status(400).send({'error':'Some error. Try again'});
+      }
     }
   } 
 };
@@ -146,41 +149,41 @@ module.exports.delete = async (req, res) => {
   if (!validator.isMongoId(id)) {
     res.status(400).send({'error':'There is no such blog post'});
   } else {
-    Blog.findByIdAndDelete(id, (err, result) => {
-      console.log(id);
-      if (err) {
-        debug(err);
-        res.status(400).send({'error':'Some error. Try again'});
-      } else if (result) {
-        res.status(202).send('Post deleted successfully');
-      } else {
-        res.status(400).send({'error':'There is no such blog post'});
+    try {
+      const result = await Blog.findByIdAndDelete(id);
+      if(result) {
+        return res.status(202).send('Post deleted successfully');
       }
-    });
+      return res.status(400).send({'error':'There is no such blog post'});
+    } catch (err) {
+      debug(err);
+      res.status(400).send({'error':'Some error. Try again'});
+    }
   }
 };
 
 /**
  *  Middleware for checking if user is owner of blog
  */
-module.exports.checkBlogOwner = (req, res, next) => {
+module.exports.checkBlogOwner = async (req, res, next) => {
   const id = req.params.id;
   if (!validator.isMongoId(id)) {
     res.status(400).send({'error':'There is no such blog post'});
   } else {
-    Blog.findById(id).exec((err, post) => {
-      if (post) {
+    try {
+      const post = await Blog.findById(id);
+      if(post) {
         if (post.userId.toString() === req.session.user._id.toString()) {
           next();
+          return;
         } else {
-          res.status(403).send({'error':'You are not owner of this post'});
+          return res.status(403).send({'error':'You are not owner of this post'});
         }
-      } else if (err) {
-        debug(err);
-        res.status(400).send({'error':'Some error. Try again'});
-      } else {
-        res.status(400).send({'error':'There is no such blog post'});
       }
-    });
+      return res.status(400).send({'error':'There is no such blog post'});
+    } catch (err) {
+      debug(err);
+      return res.status(400).send({'error':'Some error. Try again'});
+    }
   }
 };
