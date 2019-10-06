@@ -10,6 +10,7 @@ const validator = require('validator');
  * @route /blog/
  * @method GET
  */
+
 module.exports.all = async (req, res) => {
   try {
     const result = await Blog.find().populate('userId');
@@ -21,6 +22,7 @@ module.exports.all = async (req, res) => {
     debug(err);
     return res.status(400).send({'error':'Some error. Try again'});
   }
+
 };
 
 /**
@@ -39,6 +41,7 @@ module.exports.dashboard = async (req, res) => {
     debug(err);
     res.status(400).send({'error':'Some error. Try again'});
   }
+
 };
 
 /**
@@ -47,6 +50,7 @@ module.exports.dashboard = async (req, res) => {
  * @body title, body
  * @method POST
  */
+
 module.exports.create = async (req, res) => {
   const { title, content } = req.body;
   const data = {
@@ -75,6 +79,7 @@ module.exports.create = async (req, res) => {
       return res.status(400).send({'error':'Some error. Try again'});
     }
   }
+
 };
 
 /**
@@ -83,6 +88,7 @@ module.exports.create = async (req, res) => {
  * @param id blog post id
  * @method GET
  */
+
 module.exports.show = async (req, res, ) => {
   const id = req.params.id;
   if (!validator.isMongoId(id)) {
@@ -99,6 +105,7 @@ module.exports.show = async (req, res, ) => {
       res.status(400).send({'error':'Some error. Try again'});
     }
   }
+
 };
 
 /**
@@ -136,6 +143,7 @@ module.exports.edit = async (req, res) => {
       }
     }
   } 
+
 };
 
 /**
@@ -160,6 +168,7 @@ module.exports.delete = async (req, res) => {
       res.status(400).send({'error':'Some error. Try again'});
     }
   }
+
 };
 
 /**
@@ -185,5 +194,6 @@ module.exports.checkBlogOwner = async (req, res, next) => {
       debug(err);
       return res.status(400).send({'error':'Some error. Try again'});
     }
+
   }
 };
