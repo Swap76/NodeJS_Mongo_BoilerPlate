@@ -1,3 +1,5 @@
+'use strict';
+
 const Joi = require('joi');
 const debug = require('debug')('api:AuthController');
 const bcrypt = require('bcryptjs');
@@ -62,6 +64,7 @@ exports.register = async (req, res) => {
 			));
 	}
 }
+>>>>>> master
 
 /**
  * Logs in the existing user
@@ -111,23 +114,24 @@ module.exports.login = async (req, res) => {
  * @param none
  * @method GET
  */
-module.exports.logout = (req, res, next) => {
-	if (req.session.user != null) {
-		req.session.user = null;
-		req.session.loggedIn = false;
-		res.status(200).send('Logged out');
-	} else {
-		res.status(400).send({ 'error': 'Some error in logout try again' });
-	}
+module.exports.logout = (req, res) => {
+  if (req.session.user != null) {
+    req.session.user = null;
+    req.session.loggedIn = false;
+    res.status(200).send('Logged out');
+  } else {
+    res.status(400).send({ error: 'Some error in logout try again' });
+  }
 };
 
 /**
  *  Middleware for checking if user is logged in or not
  */
 module.exports.checkUser = (req, res, next) => {
-	if (req.session.user && req.session.user._id) {
-		next();
-	} else {
-		res.status(400).send('Login first');
-	}
+  if (req.session.user && req.session.user._id) {
+    next();
+  } else {
+    res.status(400).send('Login first');
+  }
+
 };
