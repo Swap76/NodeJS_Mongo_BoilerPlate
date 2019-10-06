@@ -4,9 +4,9 @@ const
     authController = require('../controllers/auth/AuthController'),
     UserValidator = require('../middleware/validators/user.validator');
 
-router.post('/register', authController.register, UserValidator.user);
+router.post('/register', UserValidator.user, authController.register);
 
-router.post('/login', authController.login, UserValidator.user);
+router.post('/login', UserValidator.user, authController.login);
 
 router.get('/logout', authController.logout);
 
