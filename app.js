@@ -1,7 +1,7 @@
 const express = require('express');
 const moment = require('moment');
 const debug = require('debug')('api:app');
-const Raven = require('raven');
+const Sentry = require('@sentry/node');
 require('dotenv').config(); // Load .env
 const initRoutes = require('./src/routes/index')
 const initDatabase = require('./src/config/database');
@@ -9,9 +9,10 @@ const initMiddleware = require('./src/config/middleware')
 
 const app = express();
 
-// Sentry Error Monitoring System
-Raven.config(process.env.SENTRY_DSN).install();
-app.use(Raven.requestHandler());
+// Sentry for Error monitoring 
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+});
 
 app.locals.moment = moment;
 

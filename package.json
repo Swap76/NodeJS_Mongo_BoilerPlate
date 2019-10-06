@@ -5,21 +5,21 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DEBUG=api:* nodemon app.js",
-    "client": "cd client && npm start",
-    "dev": "concurrently \"npm run start\" \"npm run client\""
+    "start": "nodemon app.js",
+    "dev": "DEBUG=api:* nodemon app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Swap76/React_Blog.git"
+    "url": "git+https://github.com/Swap76/NodeJS_Mongo_BoilerPlate"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Swap76/React_Blog/issues"
+    "url": "https://github.com/Swap76/NodeJS_Mongo_BoilerPlate/issues"
   },
-  "homepage": "https://github.com/Swap76/React_Blog#readme",
+  "homepage": "https://github.com/Swap76/NodeJS_Mongo_BoilerPlate#readme",
   "dependencies": {
+    "@sentry/node": "^5.6.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "compression": "^1.7.4",
@@ -36,7 +36,6 @@
     "nodemon": "^1.19.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "raven": "^2.6.4",
     "validator": "^10.11.0"
   }
 }
