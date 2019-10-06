@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 const moment = require('moment');
 const Sentry = require('@sentry/node');
 require('dotenv').config(); // Load .env
