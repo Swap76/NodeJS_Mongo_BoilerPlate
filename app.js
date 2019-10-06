@@ -1,16 +1,16 @@
 const express = require('express');
 const moment = require('moment');
-const debug = require('debug')('api:app');
 const Sentry = require('@sentry/node');
 require('dotenv').config(); // Load .env
-const initRoutes = require('./src/routes/index')
+const initRoutes = require('./src/routes/index');
 const initDatabase = require('./src/config/database');
-const initMiddleware = require('./src/config/middleware')
+const initMiddleware = require('./src/config/middleware');
 
 const app = express();
 
 // Sentry for Error monitoring 
 Sentry.init({
+  /*eslint-disable */
   dsn: process.env.SENTRY_DSN,
 });
 

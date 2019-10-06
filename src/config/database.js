@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 
 const initDatabase = () => {
 	
-	debug('Initializing database connection...');
+  debug('Initializing database connection...');
+  /*eslint-disable */
+  const db = process.env.MONGODB_URL;
 
-	const db = process.env.MONGODB_URL;
+  mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true})
+    .catch(err => debug(err));
 
-	mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true})
-		.catch(err => debug(err));
+  const connection = mongoose.connection;
 
-	const connection = mongoose.connection;
-
-	connection.once('open', () => {
-		debug("MongoDB database connected successfully");
-	})
+  connection.once('open', () => {
+    debug('MongoDB database connected successfully');
+  });
 };
   
 module.exports = initDatabase;
