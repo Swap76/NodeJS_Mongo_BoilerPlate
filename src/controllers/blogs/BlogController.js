@@ -67,7 +67,6 @@ module.exports.create = async (req, res, next) => {
 				res.status(400).send({'error':'Some error. Try again'});
 			} else if (result) {
 				res.status(201).send("Post added successfully");
-				console.log(result);
 			}
 		});
 	}
@@ -125,7 +124,6 @@ module.exports.edit = async (req, res, next) => {
 					debug(err);
 					res.status(400).send({'error':'Some error. Try again'});
 				} else if (result) {
-					console.log(result);
 					res.status(202).send("Post updated successfully");
 				} else {
 					res.status(400).send({'error':'There is no such blog post'});
@@ -147,7 +145,6 @@ module.exports.delete = async (req, res, next) => {
     res.status(400).send({'error':'There is no such blog post'});
   } else {
     Blog.findByIdAndDelete(id, (err, result) => {
-			console.log(id);
       if (err) {
 				debug(err);
         res.status(400).send({'error':'Some error. Try again'});
