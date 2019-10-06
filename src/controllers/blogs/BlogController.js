@@ -125,7 +125,6 @@ module.exports.edit = async (req, res, next) => {
 			try {
 				const result = await Blog.findByIdAndUpdate(id, { $set: req.body });
 				if(result) {
-					console.log(result);
 					return res.status(202).send("Post updated successfully");
 				}
 				return res.status(400).send({'error':'There is no such blog post'});
