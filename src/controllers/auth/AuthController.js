@@ -54,9 +54,10 @@ exports.register = async (req, res) => {
 								// Save user
 								newUser.save()
 									.then(user => {
+										console.log(user);
 										res.status(400).send('You are now registered');
 									})
-									.catch(err => debug(err));
+									.catch(err => console.log(err));
 							}
 					}))
 				}
@@ -74,38 +75,40 @@ module.exports.login = async (req, res) => {
 	const data = {
 		email: req.body.email,
 		password: req.body.password,
-	};
-	const check = {
+	  };
+	  const check = {
 		email: Joi.string().email().required().trim(),
 		password: Joi.string().required().min(8).max(32)
-	};
-	const { error } = Joi.validate(data, check);
-	if (error) {
-		res.status(400).send({'error':error.details[0].message});	 
-	}
-	else {
+	  };
+	  const { error } = Joi.validate(data, check);
+	  if (error) {
+			res.status(400).send({'error':error.details[0].message});	 
+	  }
+	  else {
 		User.findOne({ email: req.body.email}, (err, user) => {
 			if (err) {
-			debug(err);
+			  debug(err);
 				res.status(400).send({'error':'Some error from mongodb. Try again'});  
 			} else if (user) {
-			bcrypt.compare(req.body.password, user.password, (err, match) => {
+			  bcrypt.compare(req.body.password, user.password, (err, match) => {
 				if (err) {
-				debug(err);
+				  debug(err);
 					res.status(400).send({'error':'Some error from bcrypt. Try again'});  
 				} else if (match) {
 					req.session.loggedIn = true;
 					req.session.user = user;
+					console.log(user);
 					res.status(200).send('Logged in.');
 				} else {
 					res.status(400).send({'error':'Incorrect Password'});  
 				}
-			});
+			  });
 			} else {
 				res.status(400).send({'error':'Incorrect email address'});
+			  console.log('Incorrect email address');			   
 			}
-		});
-	}
+		  });
+	  }
 }
 
 /**
