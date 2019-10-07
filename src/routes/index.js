@@ -1,7 +1,7 @@
 'use strict';
-const debug = require('debug')('api:routes');
-const authRoutes = require('./auth');
-const blogRoutes = require('./blog');
+import debug from ('debug','api:routes');
+import authRoutes from './auth';
+import blogRoutes from './blog';
 
 
 const initRoutes = (app) => {

@@ -1,10 +1,10 @@
 'use strict';
 
-const Joi = require('joi');
-const debug = require('debug')('api:AuthController');
-const bcrypt = require('bcryptjs');
-const User = require('../../models/Users');
-const validator = require('validator');
+import Joi from 'joi';
+import debug from ('debug','api:AuthController');
+import bcrypt from 'bcryptjs';
+import User from '../../models/Users';
+import validator from 'validator';
 
 /**
  * Sign up a new user with given form details

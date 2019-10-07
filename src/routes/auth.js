@@ -1,9 +1,9 @@
 'use strict';
-const 
-    express = require('express'),
-    router = express.Router(),
-    authController = require('../controllers/auth/AuthController'),
-    UserValidator = require('../middleware/validators/user.validator');
+ 
+import express from 'express';
+const router = express.Router();
+import authController from '../controllers/auth/AuthController';
+import UserValidator from '../middleware/validators/user.validator';
 
 router.post('/register', UserValidator.user, authController.register);
 

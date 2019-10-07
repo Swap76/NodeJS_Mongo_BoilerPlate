@@ -1,9 +1,9 @@
 'use strict';
 
-const Joi = require('joi');
-const debug = require('debug')('api:BlogController');
-const Blog = require('../../models/Blogs');
-const validator = require('validator');
+import Joi from 'joi';
+import debug from ('debug','api:BlogController');
+import Blog from '../../models/Blogs';
+import validator from 'validator';
 
 /**
  * Shows all blog posts of all users

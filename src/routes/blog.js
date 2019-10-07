@@ -1,11 +1,9 @@
-
-const 
-    express = require('express'),
-    router = express.Router(),
-    authController = require('../controllers/auth/AuthController'),
-    blogController = require('../controllers/blogs/BlogController'),
-    BlogValidator = require('../middleware/validators/blog.validator'),
-    IdValidator = require('../middleware/validators/id.validator');
+import express from 'express';
+const router = express.Router(),
+import authController from '../controllers/auth/AuthController';
+import blogController from '../controllers/blogs/BlogController';
+import BlogValidator from '../middleware/validators/blog.validator';
+import IdValidator from '../middleware/validators/id.validator';
 
 router.get('/', blogController.all);
 

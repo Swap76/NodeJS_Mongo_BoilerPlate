@@ -1,5 +1,5 @@
-const __ = require('../../util/response'),
-    Joi = require('joi');
+import __ from '../../util/response',
+import Joi from 'joi';
 
 class UserValidator {
 

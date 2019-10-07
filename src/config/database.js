@@ -1,6 +1,6 @@
 'use strict';
-const debug = require('debug')('api:database');
-const mongoose = require('mongoose');
+import debug from 'debug'('api:database');
+import mongoose from 'mongoose';
 
 const initDatabase = () => {
 	

@@ -1,4 +1,4 @@
-const bunyan = require('bunyan');
+import bunyan from 'bunyan';
 
 exports.loggerInstance = bunyan.createLogger({
     name: 'Req Logger',

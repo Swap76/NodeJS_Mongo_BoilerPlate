@@ -1,12 +1,12 @@
 'use strict';
-const helmet = require('helmet');
-const passport = require('passport');
-const compression = require('compression');
-const debug = require('debug')('api:middleware');
-const bodyParser = require('body-parser');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
+import helmet from 'helmet';
+import passport from 'passport';
+import compression from 'compression';
+import debug from ('debug','api:middleware');
+import bodyParser from 'body-parser';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const initMiddleware = (app) => {
 

@@ -1,4 +1,4 @@
-const logger = require('../lib/logger/bunyan');
+import logger from '../lib/logger/bunyan';
 
 class SendResponse {
 
