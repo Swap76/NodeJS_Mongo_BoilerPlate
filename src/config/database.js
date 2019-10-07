@@ -1,14 +1,14 @@
 'use strict';
 const debug = require('debug')('api:database');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const initDatabase = () => {
-	
+
   debug('Initializing database connection...');
   /*eslint-disable */
   const db = process.env.MONGODB_URL;
 
-  mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true})
+  mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true })
     .catch(err => debug(err));
 
   const connection = mongoose.connection;
@@ -17,7 +17,5 @@ const initDatabase = () => {
     debug('MongoDB database connected successfully');
   });
 };
-  
-module.exports = initDatabase;
-  
 
+export default initDatabase;

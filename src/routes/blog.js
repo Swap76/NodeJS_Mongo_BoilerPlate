@@ -1,11 +1,11 @@
 
 const 
-    express = require('express'),
-    router = express.Router(),
-    authController = require('../controllers/auth/AuthController'),
-    blogController = require('../controllers/blogs/BlogController'),
-    BlogValidator = require('../middleware/validators/blog.validator'),
-    IdValidator = require('../middleware/validators/id.validator');
+  express = require('express'),
+  router = express.Router(),
+  authController = require('../controllers/auth/AuthController'),
+  blogController = require('../controllers/blogs/BlogController'),
+  BlogValidator = require('../middleware/validators/blog.validator'),
+  IdValidator = require('../middleware/validators/id.validator');
 
 router.get('/', blogController.all);
 
