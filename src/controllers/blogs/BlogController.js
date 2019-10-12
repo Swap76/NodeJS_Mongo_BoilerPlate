@@ -197,3 +197,55 @@ module.exports.checkBlogOwner = async (req, res, next) => {
 
   }
 };
+
+/**
+ * method for upvoting a blog
+ * @route /blog/:id/upvote
+ * @param id blog post id
+ * @method POST
+ */
+module.exports.upvote = async (req, res) => {
+  const id = req.params.id;
+  if (!validator.isMongoId(id)) {
+    res.status(400).send({'error':'There is no such blog post'});
+  } else{
+
+    try {
+      const result = await Blog.findByIdAndUpdate(id, { $inc: {upvote : 1 } });
+      if(result) {
+        return res.status(202).send('Blog post upvoted successfully');
+      }
+      return res.status(400).send({'error':'There is no such blog post'});
+    } catch(err) {
+      debug(err);
+      return res.status(400).send({'error':'Some error. Try again'});
+    }
+  } 
+
+};
+
+/**
+ * method for downvoting a blog
+ * @route /blog/:id/downvote
+ * @param id blog post id
+ * @method POST
+ */
+module.exports.downvote = async (req, res) => {
+  const id = req.params.id;
+  if (!validator.isMongoId(id)) {
+    res.status(400).send({'error':'There is no such blog post'});
+  } else{
+
+    try {
+      const result = await Blog.findByIdAndUpdate(id, { $inc: {downvote : 1 } });
+      if(result) {
+        return res.status(202).send('Blog post downvoted successfully');
+      }
+      return res.status(400).send({'error':'There is no such blog post'});
+    } catch(err) {
+      debug(err);
+      return res.status(400).send({'error':'Some error. Try again'});
+    }
+  } 
+
+};

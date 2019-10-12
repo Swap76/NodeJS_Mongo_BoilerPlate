@@ -14,6 +14,14 @@ var blogSchema = new Schema ({
     text: true,
     maxlength: 256,
   },
+  upvote: {
+    type: Number,
+    default: 0
+  },
+  downvote: {
+    type: Number,
+    default: 0
+  },
   content: {
     type: String,
     required: true,

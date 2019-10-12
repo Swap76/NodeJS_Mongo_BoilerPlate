@@ -9,11 +9,6 @@
     "dev": "DEBUG=api:* nodemon app.js --watch server --exec babel-node",
     "lint": "eslint './**/*.js' --fix"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Swap76/NodeJS_Mongo_BoilerPlate"
@@ -51,7 +46,6 @@
     "@babel/core": "^7.6.2",
     "@babel/node": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
-    "eslint": "6.5.1",
-    "husky": "3.0.8"
+    "eslint": "6.5.1"
   }
 }
