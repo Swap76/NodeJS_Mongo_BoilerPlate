@@ -1,5 +1,5 @@
 # NodeJS_Blog_RestAPI
-CRUD API using NodeJS, Experss, MongoDB
+CRUD API using NodeJS, Express, MongoDB
 
 ## About
 
