@@ -32,10 +32,6 @@ Following are the softwares requried to get this api up and running.
   ```
   npm start
   ```
-### Testing
-
-Import the file Blog.postman_collection_v2.json into postman for testing API endpoints.
-
   
 ## Developers
 
