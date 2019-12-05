@@ -1,12 +1,17 @@
 const express = require('express');
+const errorHandler = require('errorhandler');
 const moment = require('moment');
 const Sentry = require('@sentry/node');
+const Debug = require('debug');
 require('dotenv').config(); // Load .env
 const initMiddleware = require('./config/middleware');
 const initRoutes = require('./routes/index');
 const initDatabase = require('./config/database');
+const debug = Debug('WDL:app');
 
 const app = express();
+
+app.use(errorHandler());
 
 // Sentry for Error monitoring 
 Sentry.init({
