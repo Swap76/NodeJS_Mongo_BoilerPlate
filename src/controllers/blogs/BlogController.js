@@ -17,7 +17,7 @@ module.exports.all = async (req, res) => {
     if(result.length > 0) {
       return res.status(200).send(result);
     }
-    return res.status(400).send({'error':'There are no blogs'});
+    return res.status(200).send({'error':'There are no blogs'});
   } catch (err) {
     debug(err);
     return res.status(400).send({'error':'Some error. Try again'});
