@@ -1,4 +1,3 @@
-'use strict';
 const helmet = require('helmet');
 const passport = require('passport');
 const compression = require('compression');

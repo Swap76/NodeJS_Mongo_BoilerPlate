@@ -31,6 +31,6 @@ app.use((req, res, next) => {
   next(err);
 });
 
-app.listen(5000)
+const server = app.listen(process.env.PORT || '5000', () => debug(`Server running on port ${process.env.PORT || 5000}`));
 
-module.exports = app;
+module.exports = server;

@@ -3,13 +3,11 @@ const mongoose = require('mongoose');
 
 const initDatabase = () => {
   debug('Initializing database connection...');
-  
-  const db = process.env.MONGODB_URL;
 
   /**
    * Start MongoDB Connection
    */
-  mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true })
+  mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useCreateIndex: true })
     .catch(err => debug(err));
 
   const connection = mongoose.connection;
