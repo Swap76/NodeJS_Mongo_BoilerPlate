@@ -1,10 +1,10 @@
-import express from 'express';
-import moment from 'moment';
-import Sentry from '@sentry/node';
+const express = require('express');
+const moment = require('moment');
+const Sentry = require('@sentry/node');
 require('dotenv').config(); // Load .env
-import initRoutes from './src/routes/index';
-import initDatabase from './src/config/database';
-import initMiddleware from './src/config/middleware';
+const initMiddleware = require('./config/middleware');
+const initRoutes = require('./routes/index');
+const initDatabase = require('./config/database');
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.locals.moment = moment;
 initMiddleware(app);
 
 // Database
-initDatabase(app);
+initDatabase();
 
 // Routes
 initRoutes(app);

@@ -1,6 +1,6 @@
 'use strict';
 const debug = require('debug')('api:database');
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const initDatabase = () => {
 
@@ -18,4 +18,4 @@ const initDatabase = () => {
   });
 };
 
-export default initDatabase;
+module.exports = initDatabase;

@@ -4,10 +4,10 @@
   "description": "React NodejS App",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js --watch server --exec babel-node",
-    "dev": "DEBUG=api:* nodemon app.js --watch server --exec babel-node",
-    "lint": "eslint './**/*.js' --fix"
+    "start": "nodemon src/app.js --watch server --exec babel-node",
+    "dev": "DEBUG=api:* nodemon src/app.js --watch server --exec babel-node",
+    "lint": "eslint .",
+    "fix": "eslint --fix . && git add ."
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/Swap76/NodeJS_Mongo_BoilerPlate#readme",
   "dependencies": {
-    "@sentry/node": "^5.6.2",
+    "@sentry/node": "^5.10.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "bunyan": "^1.8.12",

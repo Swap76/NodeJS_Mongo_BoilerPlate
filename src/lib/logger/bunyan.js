@@ -10,7 +10,7 @@ exports.loggerInstance = bunyan.createLogger({
   streams: [
     {
       level: 'info',
-      path: require('path').join(process.cwd(), 'logs/reqRes.log')  // log ERROR and above to a file
+      path: require('path').join(process.cwd(), 'src/logs/reqRes.log')  // log ERROR and above to a file
     }
   ]
 });
