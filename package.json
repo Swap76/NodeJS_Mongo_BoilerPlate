@@ -4,7 +4,7 @@
   "description": "React NodejS App",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon src/app.js --watch server --exec babel-node",
+    "start": "DEBUG=api:* node src/app.js",
     "dev": "DEBUG=api:* nodemon src/app.js",
     "lint": "eslint .",
     "fix": "eslint --fix . && git add ."

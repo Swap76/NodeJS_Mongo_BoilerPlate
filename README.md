@@ -20,7 +20,7 @@ Following are the softwares requried to get this api up and running.
   ```
 - Create account on MongoDB Atlas and paste the       database URL in .env file
 
-- Create account on Sentry and paste the Sentry DNS   into .env file (Only for production to get emails   about errors)
+- Create account on Sentry and paste the Sentry DNS   into .env file (Only for production to get emails about errors)
 
 - Install the packages mentioned in package.json file for getting all dependencies of the project.
   ```
@@ -32,10 +32,6 @@ Following are the softwares requried to get this api up and running.
   ```
   npm start
   ```
-### Testing
-
-Import the file Blog.postman_collection_v2.json into postman for testing API endpoints.
-
   
 ## Developers
 
