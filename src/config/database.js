@@ -1,13 +1,14 @@
-'use strict';
 const debug = require('debug')('api:database');
 const mongoose = require('mongoose');
 
 const initDatabase = () => {
-
   debug('Initializing database connection...');
-  /*eslint-disable */
+  
   const db = process.env.MONGODB_URL;
 
+  /**
+   * Start MongoDB Connection
+   */
   mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true })
     .catch(err => debug(err));
 
