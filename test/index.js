@@ -6,6 +6,15 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 describe('Testing GET route', function() {
+  it('should welcome us / GET', function(done) {
+    chai.request(server)
+      .get('/')
+      .end(function(err, res){
+        res.should.have.status(200);
+        done();
+      });
+  });
+  
   it('should list ALL blogs on blog/ GET', function(done) {
     chai.request(server)
       .get('/blog/')
