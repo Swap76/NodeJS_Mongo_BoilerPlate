@@ -4,6 +4,8 @@ const Joi = require('joi');
 const debug = require('debug')('api:BlogController');
 const Blog = require('../../models/Blogs');
 const validator = require('validator');
+const jwt = require('jsonwebtoken');
+const jwtKey = process.env.SECRET_KEY;
 
 /**
  * Shows all blog posts of all users
@@ -31,13 +33,19 @@ module.exports.all = async (req, res) => {
  * @method GET
  */
 module.exports.dashboard = async (req, res) => {
+  const token = req.cookies.token;
+  var payload;
   try {
-    const result = await Blog.find({ userId: req.session.user._id });
+    payload = jwt.verify(token, jwtKey);
+    const result = await Blog.find({ userId: payload.user._id });
     if(result > 0) {
       res.status(200).send(result);
     }
     return res.status(400).send({'error':'There are no blogs'}); 
   } catch (err) {
+    if(err instanceof jwt.JsonWebTokenError) {
+      return res.status(401).end(); // this is an unauthenticated request
+    }
     debug(err);
     res.status(400).send({'error':'Some error. Try again'});
   }
@@ -65,7 +73,18 @@ module.exports.create = async (req, res) => {
   if (error) {
     res.status(400).send({'error':error.details[0].message});
   } else {
-    req.body.userId = req.session.user._id;
+    const token = req.cookies.token;
+    var payload;
+    try {
+      payload = jwt.verify(token, jwtKey);
+    } catch(err) {
+      if (err instanceof jwt.JsonWebTokenError) {
+        return res.status(401).end();
+      }
+      debug(err);
+      return res.status(400).end();
+    }
+    req.body.userId = payload.user._id;
     const newBlog = new Blog(req.body);
 		
     try {
@@ -180,9 +199,12 @@ module.exports.checkBlogOwner = async (req, res, next) => {
     res.status(400).send({'error':'There is no such blog post'});
   } else {
     try {
+      const token = req.cookies.token;
+      var payload;
       const post = await Blog.findById(id);
       if(post) {
-        if (post.userId.toString() === req.session.user._id.toString()) {
+        payload = jwt.verify(token, jwtKey);
+        if (post.userId.toString() === payload.user._id.toString()) {
           next();
           return;
         } else {
@@ -191,6 +213,9 @@ module.exports.checkBlogOwner = async (req, res, next) => {
       }
       return res.status(400).send({'error':'There is no such blog post'});
     } catch (err) {
+      if(err instanceof jwt.JsonWebTokenError) {
+        return res.status(401).end(); // this is an unauthenticated request
+      }
       debug(err);
       return res.status(400).send({'error':'Some error. Try again'});
     }
