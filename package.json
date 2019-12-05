@@ -1,7 +1,7 @@
 {
-  "name": "react_blog",
+  "name": "nodejs_mongo_boilerplate",
   "version": "1.0.0",
-  "description": "React NodejS App",
+  "description": "CRUD Blog using NodeJS,Express, MongoDB",
   "main": "app.js",
   "scripts": {
     "start": "DEBUG=api:* node src/app.js",
