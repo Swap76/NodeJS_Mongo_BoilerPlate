@@ -4,12 +4,6 @@ var server = require('../src/app');
 
 chai.use(chaiHttp);
 
-describe('Server Up & Running', function() {
-  it('should not return anything', function() {
-        
-  });
-});
-
 describe('Testing GET route', function() {
   it('should list ALL blogs on blog/ GET', function(done) {
     chai.request(server)
