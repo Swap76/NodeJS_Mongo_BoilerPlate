@@ -15,6 +15,8 @@
     "rules": {
         "indent": ["error", 2],
         "semi": ["error", "always"],
-        "quotes": ["error", "single"]
+        "quotes": ["error", "single"],
+        "require-atomic-updates": "off",
+        "no-undef": "off"
     }
 }

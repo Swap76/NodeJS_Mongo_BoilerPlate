@@ -1,13 +1,11 @@
 'use strict';
-const 
-  express = require('express'),
-  router = express.Router(),
-  authController = require('../controllers/auth/AuthController'),
-  UserValidator = require('../middleware/validators/user.validator');
+const express = require('express');
+const router = express.Router();
+const authController = require('../controllers/auth/AuthController');
 
-router.post('/register', UserValidator.user, authController.register);
+router.post('/register', authController.register);
 
-router.post('/login', UserValidator.user, authController.login);
+router.post('/login', authController.login);
 
 router.get('/logout', authController.logout);
 
