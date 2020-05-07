@@ -45,7 +45,7 @@ to install them on your system.
 
 * Building the Docker Image for Docker Hub
 	```
-	docker build -t your_dockerhub_username/your-project-name .
+	docker build -t your_dockerhub_username/your_project_name .
 	```
 	The . specifies that the build context is the current directory.
 
@@ -57,7 +57,7 @@ to install them on your system.
 
 * Run the following command to build the container:
 	```
-	docker run -p 5000:5000 <your_dockerhub_username>/testcase-generator
+	docker run -p 5000:5000 <your_dockerhub_username>/<your_project_name>
 	```
 	All requests of port 5000 will be forwarded to port 5000 of container
 
